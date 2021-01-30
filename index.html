@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+        <div class="booking-form">
+            <h3>Booking Flights</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" id="flying-from" placeholder="Dhaka, Bangladesh" disabled>
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="flying-to" placeholder="New York, United States" disabled>
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="departure-date">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="firstClass-fare" class="inp-style inp-width" type="text" name="first-class" value="0" disabled>
+                </div>
+                <div class="plus-minus-btn">
+                    <p>
+                        <button class="button" onclick="handleFareChange('firstClass',false)" type="button">-</button>
+                        <button class="button" onclick="handleFareChange('firstClass',true)" type="button">+</button>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="economyClass-fare" class="inp-style inp-width " type="text" name="economy-class" value="0" disabled>
+                </div>
+                <div class="plus-minus-btn">
+                    <p> 
+                        <button class="button" onclick="handleFareChange('economyClass',false)" type="button">-</button>
+                        <button class="button" onclick="handleFareChange('economyClass',true)" type="button">+</button> 
+                    </p>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div id="sub-total" class="right">
+                        <p>$0</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div id="vat-amount" class="right">
+                        <p>$0</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div id="grand-total" class="right">
+                        <p>$0</p>
+                    </div>
+                </div>
+            </div>
+            <button type="button" onclick="confirmationAlert()" class="btn-style">Book Now</button>
+        </div>
+
+        <div class="booking-content">
+            <h1>discover <br> around the world</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+        </div>
+    </section>
+
+    <script>
+        function handleFareChange(fareType,isIncrease){
+            const fareInput=document.getElementById(fareType+'-fare');
+            const fareCount=parseInt(fareInput.value);
+            let fareNewCount=fareCount;
+
+            if(isIncrease==true)
+            {
+                fareNewCount=fareCount+1;
+            }
+
+            if(isIncrease==false && fareCount>0)
+            {
+                fareNewCount=fareCount-1;
+            }
+
+            fareInput.value=fareNewCount;
+            let fareTotal=0;
+            
+            if(fareType=='firstClass')
+            {
+                fareTotal=fareNewCount*150;
+            }
+
+            if(fareType=='economyClass')
+            {
+                fareTotal=fareNewCount*100;
+            }
+
+
+            calculateTotalCost();
+        }
+
+        
+        function calculateTotalCost(){
+            const firstClassTicket=parseInt(document.getElementById('firstClass-fare').value);
+            const economyClassTicket=parseInt(document.getElementById('economyClass-fare').value)
+
+            const subTotalPrice= (firstClassTicket*150) + (economyClassTicket*100);
+            document.getElementById('sub-total').innerText='$'+subTotalPrice;
+
+            const vat=Math.round(subTotalPrice*0.1);
+            document.getElementById('vat-amount').innerText='$'+vat;
+
+            const grandTotal=subTotalPrice+vat;
+            document.getElementById('grand-total').innerText='$'+grandTotal;
+        
+        
+        }
+
+
+        function confirmationAlert(){
+            
+            
+            swal("Your Ticket Confirmed!", "********Ticket Information********\n Flying From: \n Flying To: \nDeparture:  \n First-Class Ticket:  \n Economy-Class Ticket: \n Sub-Total :\n Vat(10%):  \nGrand-Total: ", 
+            "success");
+            
+        }
+
+    </script>
+
+    <!--Thank You-->
+</body>
+
+</html>
